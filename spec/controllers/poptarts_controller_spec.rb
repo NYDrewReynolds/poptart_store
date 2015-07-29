@@ -13,6 +13,17 @@ describe PoptartsController do
       expect(poptarts['poptarts'].first['flavor']).to eq('strawberry')
       expect(poptarts['poptarts'].first['sprinkles']).to eq('red')
     end
+
+    it 'returns all spooky poptarts on halloween' do
+      Poptart.create(flavor: 'strawberry', sprinkles: 'red')
+      get :index, format: :json, promotion: 'halloween'
+
+      expect(response).to have_http_status(:ok)
+      poptarts = JSON.parse(response.body)
+      expect(poptarts.count).to eq(1)
+      expect(poptarts['poptarts'].first['flavor']).to eq('Spooky strawberry')
+      expect(poptarts['poptarts'].first['sprinkles']).to eq('Spooky red')
+    end
   end
 
   context '#show' do

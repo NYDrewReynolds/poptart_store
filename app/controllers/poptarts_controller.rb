@@ -3,7 +3,11 @@ class PoptartsController < ApplicationController
   before_action :find_poptart, only: [:update, :destroy, :show]
 
   def index
-    respond_with Poptart.all
+    if params[:promotion] == 'halloween'
+      respond_with Poptart.all, each_serializer: HalloweenPoptartSerializer
+    else
+      respond_with Poptart.all
+    end
   end
 
   def show
