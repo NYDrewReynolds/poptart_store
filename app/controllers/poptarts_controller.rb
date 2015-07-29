@@ -6,12 +6,17 @@ class PoptartsController < ApplicationController
   end
 
   def show
-    respond_with Poptart.find_by(id: params[:id])
+    respond_with Poptart.find(params[:id])
   end
 
   def create
     poptart = Poptart.create(poptart_params)
     respond_with poptart
+  end
+
+  def update
+    poptart = Poptart.find(params[:id])
+    respond_with poptart.update_attributes(poptart_params)
   end
 
   private
