@@ -7,7 +7,11 @@ class PoptartsController < ApplicationController
   end
 
   def show
-    respond_with @poptart.as_json(promotion: params[:promotion])
+    if params[:promotion] == 'halloween'
+      respond_with @poptart, serializer: HalloweenPoptartSerializer
+    else
+      respond_with @poptart
+    end
   end
 
   def create
