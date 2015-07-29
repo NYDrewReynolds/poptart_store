@@ -28,6 +28,17 @@ describe PoptartsController do
       expect(poptart_response['flavor']).to eq('smore')
       expect(poptart_response['sprinkles']).to eq('none')
     end
+
+    it 'returns spooky poptarts on halloween' do
+      poptart = Poptart.create(flavor: 'strawberry', sprinkles: 'rainbow')
+
+      get :show, id: poptart.id, format: :json, promotion: 'halloween'
+
+      poptart_response = JSON.parse(response.body)
+      expect(poptart_response['flavor']).to eq('Spooky strawberry')
+      expect(poptart_response['sprinkles']).to eq('Spooky rainbow')
+
+    end
   end
 
   context '#create' do

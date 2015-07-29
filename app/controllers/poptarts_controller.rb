@@ -1,13 +1,13 @@
 class PoptartsController < ApplicationController
   respond_to :json
-  before_action :find_poptart, only: [:update, :destroy]
+  before_action :find_poptart, only: [:update, :destroy, :show]
 
   def index
     respond_with Poptart.all
   end
 
   def show
-    respond_with Poptart.find(params[:id])
+    respond_with @poptart.as_json(promotion: params[:promotion])
   end
 
   def create
