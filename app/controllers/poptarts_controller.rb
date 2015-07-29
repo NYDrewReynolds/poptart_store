@@ -1,5 +1,6 @@
 class PoptartsController < ApplicationController
   respond_to :json
+  before_action :find_poptart, only: [:update, :destroy]
 
   def index
     respond_with Poptart.all
@@ -15,13 +16,20 @@ class PoptartsController < ApplicationController
   end
 
   def update
-    poptart = Poptart.find(params[:id])
-    respond_with poptart.update_attributes(poptart_params)
+    respond_with @poptart.update_attributes(poptart_params)
+  end
+
+  def destroy
+    respond_with @poptart.destroy
   end
 
   private
 
   def poptart_params
     params.require(:poptart).permit(:flavor, :sprinkles)
+  end
+
+  def find_poptart
+    @poptart = Poptart.find(params[:id])
   end
 end
